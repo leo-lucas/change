@@ -1,1 +1,1 @@
-web: cd change-service && npm run build && npm run start
+web: cd change-service && npm i &&  npm run build 
