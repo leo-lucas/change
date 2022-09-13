@@ -3,16 +3,32 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Dart
+name: flutter
 
 on:
+  # Runs on pushes targeting the default branch
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   build:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
 
     steps:
@@ -34,14 +50,9 @@ jobs:
         with:
           path: change_app/build/web
           
-      - name: Deploy GitHub Pages site
-        uses: actions/deploy-pages@v1.0.10
-        with:
-          # Should this action only emit build telemetry instead of deploying the build artifact?
-          emit_telemetry: true
-          # GitHub token
-          token: ${{ github.token }}
-          path: change_app/build/web
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
 
       
       
