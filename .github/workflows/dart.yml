@@ -27,7 +27,7 @@ jobs:
         run: cd change_app && flutter pub get
 
       - name: Build Web
-        run: flutter build web --release
+        run: cd change_app && flutter build web --release
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v1.0.4
